@@ -16,15 +16,28 @@
   "files": [
     "runtime.js"
   ],
+  "scripts": {
+    "standard": "standard --verbose",
+    "utest": "jest --colors",
+    "test": "standard --verbose && npm -s run utest",
+    "watch": "nodemon --exec 'npm run -s test'"
+  },
   "standard": {
     "globals": [
       "describe",
       "expect",
-      "test"
+      "test",
+      "shell"
     ],
     "ignore": [
       "tmp/**"
     ]
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "tmp/*"
+    ],
+    "delay": "1000"
   },
   "dependencies": {
     "debug": "^4.1.1"

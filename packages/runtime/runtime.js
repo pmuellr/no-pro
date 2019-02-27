@@ -14,6 +14,8 @@ const debug = require('./lib/debug')(__filename)
 
 const DefaultOptions = {
   sources: false,
+  metaData: false,
+  metrics: false,
   samplingInterval: 10 // microseconds; 1000 milliseconds = 1 microsecond
 }
 
@@ -52,19 +54,20 @@ async function startProfiling (options = {}) {
 
     debug('stopping profile')
 
-    const nodes = profile.nodes
+    let metaData, metrics, sources
 
-    const metrics = await stopMetrics()
-    const metaData = await getMetaData()
-
-    let sources = null
-    if (options.sources) {
-      sources = await getSources(session, profile)
-    }
+    if (options.metaData) metaData = await getMetaData()
+    if (options.metrics) metrics = await stopMetrics()
+    if (options.sources) sources = await getSources(session, profile)
 
     await session.destroy()
 
-    const result = { nodes, metaData, metrics }
+    // build result
+    let result = {}
+    if (metaData) result.metaData = metaData
+    if (metrics) result.metrics = metrics
+
+    Object.assign(result, profile)
     if (sources) result.sources = sources
 
     return result

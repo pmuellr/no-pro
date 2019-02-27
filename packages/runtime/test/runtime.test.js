@@ -1,7 +1,11 @@
 'use strict'
 
+const path = require('path')
+
+const shell = require('shelljs')
+
 const noProRuntime = require('..')
-const createDeferred = require('../lib/deferred')
+const someCodeToBeProfiled = require('./code-to-profile')
 
 describe('basic tests', () => {
   test('runtime has a version property', done => {
@@ -9,30 +13,39 @@ describe('basic tests', () => {
     done()
   })
 
-  test('run a profile with no sources', async done => {
+  test('run a profile with no extras', async done => {
     const stopProfiling = await noProRuntime.startProfiling()
-    await someStuffToBeProfiled()
+    await someCodeToBeProfiled({ count: 5 })
     const profile = await stopProfiling()
 
-    validateProfileResult(profile, false)
-    done()
-  })
+    validateProfileResult(profile, { metaData: false, metrics: false, sources: false })
 
-  test('run a profile with sources', async done => {
-    const stopProfiling = await noProRuntime.startProfiling({ sources: true })
-    await someStuffToBeProfiled()
+    writeProfile(profile, 'test-no-extras.cpuprofile')
+
+    done()
+  }, 10 * 1000) // timeout
+
+  test('run a profile with extras', async done => {
+    const stopProfiling = await noProRuntime.startProfiling({
+      metaData: true,
+      metrics: true,
+      sources: true
+    })
+    await someCodeToBeProfiled({ count: 5 })
     const profile = await stopProfiling()
 
-    validateProfileResult(profile, true)
+    validateProfileResult(profile, { metaData: true, metrics: true, sources: true })
+
+    writeProfile(profile, 'test-extras.cpuprofile')
+
     done()
-  })
+  }, 10 * 1000) // timeout
 })
 
-function validateProfileResult (profile, checkSources) {
+function validateProfileResult (profile, check) {
   const { nodes, metaData, metrics, sources } = profile
-  expect(Array.isArray(nodes)).toBeTruthy()
-  if (checkSources) expect(Array.isArray(sources)).toBeTruthy()
 
+  expect(Array.isArray(nodes)).toBeTruthy()
   expect(nodes[0]).toMatchObject({
     id: expect.any(Number),
     callFrame: {
@@ -46,57 +59,50 @@ function validateProfileResult (profile, checkSources) {
     // children: expect.any([Number]) ??? hmm, shame that's not supported
   })
 
-  if (checkSources) {
+  if (check.metaData) {
+    expect(metaData).toMatchObject({
+      date: expect.any(String),
+      title: expect.any(String),
+      nodeVersion: expect.any(String),
+      arch: expect.any(String),
+      platform: expect.any(String),
+      // pid: expect.any(Number), ??? is pid always a number???
+      execPath: expect.any(String)
+    })
+  }
+
+  if (check.metrics) {
+    expect(metrics).toMatchObject({
+      cpu: {
+        user: expect.any(Number),
+        system: expect.any(Number),
+        total: expect.any(Number)
+      },
+      mem: {
+        rss: expect.any(Number),
+        heapUsed: expect.any(Number),
+        heapTotal: expect.any(Number)
+      }
+    })
+  }
+
+  if (check.sources) {
+    expect(Array.isArray(sources)).toBeTruthy()
     expect(sources[0]).toMatchObject({
       scriptId: expect.any(String),
       url: expect.any(String),
       source: expect.any(String)
     })
   }
-
-  expect(metaData).toMatchObject({
-    date: expect.any(String),
-    title: expect.any(String),
-    nodeVersion: expect.any(String),
-    arch: expect.any(String),
-    platform: expect.any(String),
-    // pid: expect.any(Number), ??? is pid always a number???
-    execPath: expect.any(String)
-  })
-
-  expect(metrics).toMatchObject({
-    cpu: {
-      user: expect.any(Number),
-      system: expect.any(Number),
-      total: expect.any(Number)
-    },
-    mem: {
-      rss: expect.any(Number),
-      heapUsed: expect.any(Number),
-      heapTotal: expect.any(Number)
-    }
-  })
 }
 
-async function someStuffToBeProfiled () {
-  const count = 10
-  for (let i = 0; i < count; i++) {
-    delaySync(10)
-  }
+function writeProfile (profile, fileName) {
+  const tmpDir = path.join(__dirname, '..', 'tmp')
+  shell.mkdir('-p', tmpDir)
 
-  for (let i = 0; i < count; i++) {
-    await delayAsync(10)
-  }
-}
+  const profileString = shell.ShellString(JSON.stringify(profile, null, 4))
 
-function delaySync (ms) {
-  const end = ms + Date.now()
-  while (Date.now() < end) {}
-  return ms
-}
-
-async function delayAsync (ms) {
-  const deferred = createDeferred()
-  setTimeout(() => deferred.resolve(ms), ms)
-  return deferred.promise
+  const profileFileName = path.join(tmpDir, fileName)
+  console.log(`writing cpu profile to tmp/${fileName}`)
+  profileString.to(profileFileName)
 }

@@ -23,6 +23,7 @@
     "globals": [
       "describe",
       "expect",
+      "shell",
       "test"
     ],
     "ignore": [

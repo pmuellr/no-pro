@@ -17,9 +17,6 @@ module.exports = async function startProfiling (session, options = {}) {
 
   // returned function which stops the profile and resolves to the profile data
   return async function stopProfiling () {
-    const result = await session.post('Profiler.stop')
-    const { nodes } = result
-
-    return { nodes }
+    return session.post('Profiler.stop')
   }
 }
