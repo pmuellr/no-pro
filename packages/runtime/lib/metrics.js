@@ -1,13 +1,19 @@
 'use strict'
 
+const debug = require('./debug')(__filename)
+
 // start gathering metrics, resolves a function which resolves results
 module.exports = async function startMetrics () {
   const cpuUsageStart = process.cpuUsage()
   const memUsageStart = process.memoryUsage()
   const timeStart = Date.now()
 
+  debug('collecting metrics before run')
+
   // returned async function, resolves metrics
   return async function stopMetrics () {
+    debug('collecting metrics after run')
+
     const time = Date.now() - timeStart
     const cpuUsage = process.cpuUsage(cpuUsageStart)
     const memUsageStop = process.memoryUsage()

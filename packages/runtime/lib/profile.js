@@ -1,5 +1,7 @@
 'use strict'
 
+const debug = require('./debug')(__filename)
+
 const DefaultOptions = {
   samplingInterval: 10 // microseconds; 1000 milliseconds = 1 microsecond
 }
@@ -9,6 +11,8 @@ const DefaultOptions = {
 module.exports = async function startProfiling (session, options = {}) {
   options = Object.assign({}, DefaultOptions, options)
 
+  debug('starting profile')
+
   const interval = options.samplingInterval
 
   await session.post(session, 'Profiler.enable')
@@ -17,6 +21,7 @@ module.exports = async function startProfiling (session, options = {}) {
 
   // returned function which stops the profile and resolves to the profile data
   return async function stopProfiling () {
+    debug('stopping profile')
     return session.post('Profiler.stop')
   }
 }

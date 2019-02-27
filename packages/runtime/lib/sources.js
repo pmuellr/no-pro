@@ -1,7 +1,11 @@
 'use strict'
 
+const debug = require('./debug')(__filename)
+
 // return array of {scriptId, source} for scriptId's found in a profile
 module.exports = async function getSources (session, profile) {
+  debug('getting sources')
+
   const { nodes } = profile
   if (!Array.isArray(nodes)) {
     throw new Error('profile.nodes is not an array')

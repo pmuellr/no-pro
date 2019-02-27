@@ -18,6 +18,6 @@ module.exports = async function getMetaData () {
     mainModule: process.mainModule && process.mainModule.filename
   }
 
-  debug(`getMetaData() returning ${JSON.stringify(result)}`)
+  debug(`getting metadata`)
   return result
 }

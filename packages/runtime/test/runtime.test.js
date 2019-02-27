@@ -7,6 +7,10 @@ const shell = require('shelljs')
 const noProRuntime = require('..')
 const someCodeToBeProfiled = require('./code-to-profile')
 
+// create a tmp directory in the root of the package dir
+const tmpDir = path.join(__dirname, '..', 'tmp')
+shell.mkdir('-p', tmpDir)
+
 describe('basic tests', () => {
   test('runtime has a version property', done => {
     expect(noProRuntime.version).toEqual(expect.stringMatching(/^\d*\.\d*\.\d*$/))
@@ -26,17 +30,26 @@ describe('basic tests', () => {
   }, 10 * 1000) // timeout
 
   test('run a profile with extras', async done => {
+    const profileFile = path.join(tmpDir, 'test-extras.cpuprofile')
+
+    // remove profile file
+    shell.rm(profileFile)
+
     const stopProfiling = await noProRuntime.startProfiling({
       metaData: true,
       metrics: true,
-      sources: true
+      sources: true,
+      writeFile: path.join(tmpDir, 'test-extras.cpuprofile')
     })
+
     await someCodeToBeProfiled({ count: 5 })
     const profile = await stopProfiling()
 
-    validateProfileResult(profile, { metaData: true, metrics: true, sources: true })
+    // check that the written file is as expected
+    const profileWritten = shell.cat(profileFile)
+    expect(JSON.parse(profileWritten)).toEqual(profile)
 
-    writeProfile(profile, 'test-extras.cpuprofile')
+    validateProfileResult(profile, { metaData: true, metrics: true, sources: true })
 
     done()
   }, 10 * 1000) // timeout
@@ -97,12 +110,8 @@ function validateProfileResult (profile, check) {
 }
 
 function writeProfile (profile, fileName) {
-  const tmpDir = path.join(__dirname, '..', 'tmp')
-  shell.mkdir('-p', tmpDir)
-
   const profileString = shell.ShellString(JSON.stringify(profile, null, 4))
 
   const profileFileName = path.join(tmpDir, fileName)
-  console.log(`writing cpu profile to tmp/${fileName}`)
   profileString.to(profileFileName)
 }

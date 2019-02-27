@@ -79,6 +79,13 @@ properties:
   (1000 microseconds = 1 millisecond; 1000 milliseconds = 1 second).
   Default: `10`
 
+- `writeFile`
+
+  The value should be a string or function.  If a string, the profile
+  will be written to the specified file.  If a function, the function
+  will be invoked as an async function, and passed the profile object
+  to be written.
+
 
 license / contributing / etc
 ================================================================================
