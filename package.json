@@ -1,0 +1,40 @@
+{
+  "name": "no-pro",
+  "private": true,
+  "description": "web app to display weather info from the NWS",
+  "license": "MIT",
+  "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
+  "homepage": "https://github.com/pmuellr/no-pro",
+  "scripts": {
+    "check-deps": "tools/check-deps.sh",
+    "standard": "standard --verbose",
+    "jest": "jest",
+    "test": "standard --verbose && npm -s run jest",
+    "watch": "nodemon --exec 'npm run -s test'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmuellr/no-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmuellr/no-pro/issues"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "expect",
+      "test"
+    ],
+    "ignore": [
+      "tmp/**"
+    ]
+  },
+  "devDependencies": {
+    "dependency-check": "^3.3.0",
+    "jest": "^24.1.0",
+    "nodemon": "^1.18.9",
+    "shelljs": "^0.8.3",
+    "standard": "^12.0.1",
+    "uuid": "^3.3.2"
+  }
+}

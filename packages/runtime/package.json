@@ -1,0 +1,32 @@
+{
+  "name": "@no-pro/runtime",
+  "version": "0.1.0",
+  "description": "web app to display weather info from the NWS",
+  "license": "MIT",
+  "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
+  "homepage": "https://github.com/pmuellr/no-pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmuellr/no-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmuellr/no-pro/issues"
+  },
+  "main": "runtime.js",
+  "files": [
+    "runtime.js"
+  ],
+  "standard": {
+    "globals": [
+      "describe",
+      "expect",
+      "test"
+    ],
+    "ignore": [
+      "tmp/**"
+    ]
+  },
+  "dependencies": {
+    "debug": "^4.1.1"
+  }
+}
