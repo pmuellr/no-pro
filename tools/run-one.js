@@ -2,22 +2,23 @@
 
 'use strict'
 
-module.exports = main
+module.exports = runOne
 
 const path = require('path')
 
 const shell = require('shelljs')
 
-if (require.main === module) {
-  const [ pkg, ...command ] = process.argv.slice(2)
-  main(pkg, command.join(' '))
-}
+const createDeferred = require('./lib/deferred')
 
-function main (pkg, command) {
+async function runOne (pkg, command) {
   if (pkg == null) {
     console.log('package name (from packages dir) must be the first argument')
     process.exit(1)
   }
+
+  // all full directory name, for tab completion from the cli
+  if (pkg.startsWith('packages/')) pkg = pkg.replace(/^packages\//, '')
+  if (pkg.endsWith('/')) pkg = pkg.replace(/\/$/, '')
 
   if (Array.isArray(command)) command = command.join(' ')
   if (command == null || command.length === 0) {
@@ -41,7 +42,19 @@ function main (pkg, command) {
     env: newEnv
   }
 
-  shell.exec(command, execArgs, code => {
-    if (code !== 0) process.exit(code)
+  const deferred = createDeferred()
+
+  shell.exec(command, execArgs, (code, stdout, stderr) => {
+    deferred.resolve({ code, stdout, stderr })
   })
+
+  return deferred.promise
+}
+
+if (require.main === module) main()
+
+async function main () {
+  const [ pkg, ...command ] = process.argv.slice(2)
+  const { code } = await runOne(pkg, command.join(' '))
+  if (code !== 0) process.exit(1)
 }

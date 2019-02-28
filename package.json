@@ -1,16 +1,16 @@
 {
   "name": "no-pro",
   "private": true,
-  "description": "web app to display weather info from the NWS",
+  "description": "node profiling tools - root mono-repo package",
   "license": "MIT",
   "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
   "homepage": "https://github.com/pmuellr/no-pro",
   "scripts": {
-    "check-deps": "tools/check-deps.sh",
     "standard": "standard --verbose",
     "jest": "jest",
-    "test": "standard --verbose && npm -s run jest",
-    "watch": "nodemon --exec 'npm run -s test'"
+    "test": "npm run -s standard && npm -s run jest",
+    "watch": "nodemon --exec 'npm run -s test'",
+    "postinstall": "node tools/run-all npm install"
   },
   "repository": {
     "type": "git",
@@ -32,10 +32,12 @@
   },
   "devDependencies": {
     "dependency-check": "^3.3.0",
+    "express": "^4.16.4",
     "jest": "^24.1.0",
     "nodemon": "^1.18.9",
     "shelljs": "^0.8.3",
     "standard": "^12.0.1",
+    "tiny-json-http": "^7.0.2",
     "uuid": "^3.3.2"
   }
 }

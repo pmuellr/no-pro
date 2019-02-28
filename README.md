@@ -49,6 +49,10 @@ to perform actions on the embedded packages.
   The npm script `watch` is generally used during development to watch for
   changes to the source, and then run builds, tests, etc.
 
+- `tools/run-all.js <cmd>`
+
+  Uses `run-one.js` to the command in all embedded packages.
+
 ### examples
 
 - `tools/run-one.js runtime jest --colors`

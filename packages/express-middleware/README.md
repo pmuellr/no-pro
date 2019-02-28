@@ -79,7 +79,7 @@ properties:
   (1000 microseconds = 1 millisecond; 1000 milliseconds = 1 second).
   Default: `10`
 
-- `writeProfile`
+- `writeFile`
 
   The value should be a string or function.  If a string, the profile
   will be written to the specified file.  If a function, the function

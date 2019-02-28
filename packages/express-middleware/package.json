@@ -1,7 +1,7 @@
 {
-  "name": "@no-pro/runtime",
+  "name": "@no-pro/express-middleware",
   "version": "0.1.0",
-  "description": "node profiling tools - core runtime to generate profiles",
+  "description": "node profiling tools - express middleware",
   "license": "MIT",
   "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
   "homepage": "https://github.com/pmuellr/no-pro",
@@ -12,9 +12,9 @@
   "bugs": {
     "url": "https://github.com/pmuellr/no-pro/issues"
   },
-  "main": "runtime.js",
+  "main": "middleware.js",
   "files": [
-    "runtime.js",
+    "middleware.js",
     "lib/**/*"
   ],
   "scripts": {

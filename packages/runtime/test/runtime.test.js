@@ -1,5 +1,7 @@
 'use strict'
 
+/* global describe, test, expect */
+
 const path = require('path')
 
 const shell = require('shelljs')
@@ -11,15 +13,19 @@ const someCodeToBeProfiled = require('./code-to-profile')
 const tmpDir = path.join(__dirname, '..', 'tmp')
 shell.mkdir('-p', tmpDir)
 
-describe('basic tests', () => {
+describe('runtime tests', () => {
   test('runtime has a version property', done => {
     expect(noProRuntime.version).toEqual(expect.stringMatching(/^\d*\.\d*\.\d*$/))
     done()
   })
 
   test('run a profile with no extras', async done => {
-    const stopProfiling = await noProRuntime.startProfiling()
-    await someCodeToBeProfiled({ count: 5 })
+    const stopProfiling = await noProRuntime.startProfiling({
+      metaData: false,
+      metrics: false,
+      sources: false
+    })
+    await someCodeToBeProfiled({ count: 3 })
     const profile = await stopProfiling()
 
     validateProfileResult(profile, { metaData: false, metrics: false, sources: false })
@@ -36,13 +42,10 @@ describe('basic tests', () => {
     shell.rm(profileFile)
 
     const stopProfiling = await noProRuntime.startProfiling({
-      metaData: true,
-      metrics: true,
-      sources: true,
-      writeFile: path.join(tmpDir, 'test-extras.cpuprofile')
+      writeProfile: path.join(tmpDir, 'test-extras.cpuprofile')
     })
 
-    await someCodeToBeProfiled({ count: 5 })
+    await someCodeToBeProfiled({ count: 3 })
     const profile = await stopProfiling()
 
     // check that the written file is as expected
@@ -72,7 +75,9 @@ function validateProfileResult (profile, check) {
     // children: expect.any([Number]) ??? hmm, shame that's not supported
   })
 
-  if (check.metaData) {
+  if (!check.metaData) {
+    expect(metaData).toBeUndefined()
+  } else {
     expect(metaData).toMatchObject({
       date: expect.any(String),
       title: expect.any(String),
@@ -84,7 +89,9 @@ function validateProfileResult (profile, check) {
     })
   }
 
-  if (check.metrics) {
+  if (!check.metrics) {
+    expect(metrics).toBeUndefined()
+  } else {
     expect(metrics).toMatchObject({
       cpu: {
         user: expect.any(Number),
@@ -99,7 +106,9 @@ function validateProfileResult (profile, check) {
     })
   }
 
-  if (check.sources) {
+  if (!check.sources) {
+    expect(sources).toBeUndefined()
+  } else {
     expect(Array.isArray(sources)).toBeTruthy()
     expect(sources[0]).toMatchObject({
       scriptId: expect.any(String),

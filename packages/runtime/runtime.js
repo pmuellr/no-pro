@@ -18,10 +18,10 @@ const startMetrics = require('./lib/metrics')
 const debug = require('./lib/debug')(__filename)
 
 const DefaultOptions = {
-  writeFile: null,
-  sources: false,
-  metaData: false,
-  metrics: false,
+  writeProfile: null,
+  sources: true,
+  metaData: true,
+  metrics: true,
   samplingInterval: 10 // microseconds; 1000 milliseconds = 1 microsecond
 }
 
@@ -32,12 +32,12 @@ let CurrentlyProfiling = false
 async function startProfiling (options = {}) {
   options = Object.assign({}, DefaultOptions, options)
 
-  if (options.writeFile != null) {
-    switch (typeof options.writeFile) {
+  if (options.writeProfile != null) {
+    switch (typeof options.writeProfile) {
       case 'string': break
       case 'function': break
       default:
-        throw new Error(`invalid value for writeFile option: ${options.writeFile}`)
+        throw new Error(`invalid value for writeProfile option: ${options.writeProfile}`)
     }
   }
 
@@ -85,8 +85,8 @@ async function startProfiling (options = {}) {
     Object.assign(result, profile)
     if (sources) result.sources = sources
 
-    if (options.writeFile) {
-      await invokeFileWriter(options.writeFile, result)
+    if (options.writeProfile) {
+      await invokeFileWriter(options.writeProfile, result)
     }
 
     return result
@@ -94,15 +94,15 @@ async function startProfiling (options = {}) {
 }
 
 async function invokeFileWriter (fileNameOrFn, profile) {
-  let fileName = fileNameOrFn
   let fn = fileNameOrFn
+  let fileName = fileNameOrFn
 
   if (typeof fileName === 'string') {
     fn = writeFile
   }
 
   if (typeof fn !== 'function') {
-    throw new Error(`invalid value for writeFile option: ${fileNameOrFn}`)
+    throw new Error(`invalid value for writeProfile option: ${fileNameOrFn}`)
   }
 
   try {
@@ -116,7 +116,7 @@ async function invokeFileWriter (fileNameOrFn, profile) {
     debug(`writing profile to ${fileName}`)
 
     try {
-      await fsWriteFile(fileName, JSON.stringify(profile, null, 2))
+      await fsWriteFile(fileName, JSON.stringify(profile))
     } catch (err) {
       debug(`error writing profile to ${fileName}: ${err.message}`)
     }
