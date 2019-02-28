@@ -20,12 +20,6 @@
     "url": "https://github.com/pmuellr/no-pro/issues"
   },
   "standard": {
-    "globals": [
-      "describe",
-      "expect",
-      "shell",
-      "test"
-    ],
     "ignore": [
       "tmp/**"
     ]
@@ -34,8 +28,8 @@
     "dependency-check": "^3.3.0",
     "express": "^4.16.4",
     "jest": "^24.1.0",
-    "lerna": "^3.13.0",
     "nodemon": "^1.18.9",
+    "npm-check-updates": "^2.15.0",
     "shelljs": "^0.8.3",
     "standard": "^12.0.1",
     "tiny-json-http": "^7.0.2",
