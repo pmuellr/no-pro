@@ -10,7 +10,7 @@ const url = require('url')
 const path = require('path')
 const util = require('util')
 
-const noProRuntime = require('../runtime/')
+const noProRuntime = require('@no-pro/runtime/')
 
 const debug = require('./lib/debug')(__filename)
 

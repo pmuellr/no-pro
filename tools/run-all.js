@@ -11,6 +11,7 @@ async function runAll (command) {
   for (let pkg of packages) {
     console.log(`in package ${pkg} ...`)
     await runOne(pkg, command)
+    console.log('')
   }
 }
 
