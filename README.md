@@ -12,6 +12,11 @@ This repository is a mono-repo, with the following embedded packages:
   This package is the core runtime function to generate profile data, to be
   added as instrumentationn to your application.
 
+- [express-middleware](packages/express-middleware/README.md)
+
+  This package provides express-compatible middleware to profile requests
+  sent with a keyed header.
+
 
 development
 ================================================================================
@@ -67,6 +72,12 @@ to perform actions on the embedded packages.
   etc.
 
 
+changelog
+================================================================================
+
+See the file [CHANGELOG.md][].
+
+
 license
 ================================================================================
 
@@ -84,3 +95,4 @@ Please read the [CONTRIBUTING.md][] file for more information.
 
 [LICENSE.md]: LICENSE.md
 [CONTRIBUTING.md]: CONTRIBUTING.md
+[CHANGELOG.md]: CHANGELOG.md

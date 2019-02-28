@@ -87,6 +87,12 @@ properties:
   to be written.
 
 
+changelog
+================================================================================
+
+See the file [CHANGELOG.md](CHANGELOG.md).
+
+
 license / contributing / etc
 ================================================================================
 
