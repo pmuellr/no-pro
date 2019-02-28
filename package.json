@@ -6,9 +6,10 @@
   "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
   "homepage": "https://github.com/pmuellr/no-pro",
   "scripts": {
-    "standard": "standard --verbose",
+    "ncu": "node tools/ncu-all.js",
+    "standard": "standard --verbose && node tools/run-all npm run -s standard",
     "test-pkgs": "node tools/run-all.js npm run -s test",
-    "test": "npm run -s standard && npm run -s test-pkgs",
+    "test": "standard --verbose && npm run -s test-pkgs",
     "watch": "nodemon --exec 'npm run -s test'",
     "postinstall": "node tools/run-all npm install"
   },
@@ -29,10 +30,10 @@
     "express": "^4.16.4",
     "jest": "^24.1.0",
     "nodemon": "^1.18.9",
-    "npm-check-updates": "^2.15.0",
     "shelljs": "^0.8.3",
     "standard": "^12.0.1",
     "tiny-json-http": "^7.0.2",
     "uuid": "^3.3.2"
-  }
+  },
+  "dependencies": {}
 }

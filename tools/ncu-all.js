@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// would be nice to have ncu installed as a dev-dep, but
+// ... it don't currently work.console
+// see: https://github.com/npm/npm/issues/16862
+
 const ncuCommand = 'ncu -u --packageFile package.json'
 
 const shell = require('shelljs')
