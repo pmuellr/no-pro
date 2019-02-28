@@ -1,7 +1,7 @@
 no-pro express-middleware - express-compatible middleware to profile keyed requests
 ================================================================================
 
-<img src="https://raw.githubusercontent.com/pmuellr/no-pro/master/images/no-pro.png" width="64" align="right">
+<img src="https://raw.githubusercontent.com/pmuellr/no-pro/master/docs/images/no-pro.png" width="64" align="right">
 
 Part of the [no-pro mono-repo](https://github.com/pmuellr/no-pro).
 

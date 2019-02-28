@@ -1,7 +1,7 @@
 no-pro runtime - node.js profiling tools
 ================================================================================
 
-<img src="images/no-pro.png" width="64" align="right">
+<img src="docs/images/no-pro.png" width="64" align="right">
 
 no-pro provides CPU profiling tools for Node.js.
 
