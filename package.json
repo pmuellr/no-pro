@@ -7,9 +7,8 @@
   "homepage": "https://github.com/pmuellr/no-pro",
   "scripts": {
     "standard": "standard --verbose",
-    "jest": "jest",
-    "test": "npm run -s standard && npm -s run jest",
-    "watch": "nodemon --exec 'npm run -s test'",
+    "test-pkgs": "node tools/run-all.js npm run -s test",
+    "watch": "nodemon --exec 'npm run -s standard && npm run -s test-pkgs'",
     "postinstall": "node tools/run-all npm install"
   },
   "repository": {

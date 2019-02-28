@@ -18,10 +18,16 @@
     "lib/**/*"
   ],
   "scripts": {
+    "deps-check": "node ../../tools/deps-check.js",
     "standard": "standard --verbose",
-    "utest": "jest --colors",
-    "test": "standard --verbose && npm -s run utest",
+    "jest": "jest --colors",
+    "test": "npm -s run standard && npm run -s deps-check && npm run -s jest",
     "watch": "nodemon --exec 'npm run -s test; date'"
+  },
+  "deps-check": {
+    "missing": {
+      "ignore": "inspector"
+    }
   },
   "standard": {
     "ignore": [
