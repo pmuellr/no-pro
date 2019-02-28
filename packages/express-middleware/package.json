@@ -41,7 +41,7 @@
     "delay": "1000"
   },
   "dependencies": {
-    "debug": "^4.1.1",
-    "@no-pro/runtime": "^0.1.0"
+    "@no-pro/runtime": "^0.1.0",
+    "debug": "^4.1.1"
   }
 }
