@@ -21,6 +21,8 @@ This repository is a mono-repo, with the following embedded packages:
 development
 ================================================================================
 
+## organization
+
 This repository contains a number of independent packages rooted in the
 `packages` directory - like a [lerna repo](https://lernajs.io/), but currently
 not actually a lerna repo.  These packages are referred to below as
@@ -37,40 +39,22 @@ To counter this down-side, there are some command-line tools available in the
 `tools` directory, intended to be run from the root directory of the repository,
 to perform actions on the embedded packages.
 
-- `tools/run-one.js <package> <cmd>`
+For more info, see the [`tools/README.md`](tools/README.md) file.
 
-  This tool will run a single command in the embedded package's root directory.
-  It's actions:
+## work flow
 
-    - adds the root `tools` directory to the path
-    - adds the root `node_modules/.bin` directory to the path
-    - collects all the arguments after `<package>` to be used as the command
-      to run
-    - runs the command in the `packages/<package>` directory
+Running `npm install` on the root directory will do an `npm install` in each
+embedded package, via an npm `postinstall` script.
 
-- `tools/watch-one.js <package>`
+Typical development flow when updating a single embedded package:
 
-  A shortcut for the command: ``tools/run-one.js <package> npm run watch`.
-  The npm script `watch` is generally used during development to watch for
-  changes to the source, and then run builds, tests, etc.
+- `tools/watch-one.js <embedded package>` - run the watch command for an
+  embedded project, which watches for changes, runs tests, etc.
 
-- `tools/run-all.js <cmd>`
+- when you're done, `npm run test` to run tests for all embedded packages
 
-  Uses `run-one.js` to the command in all embedded packages.
-
-### examples
-
-- `tools/run-one.js runtime jest --colors`
-
-  Runs the `jest --colors` command in the `packages/runtime`
-  directory, to run the jest tests.
-
-- `tools/watch-one.js runtime`
-
-  Runs the `npm run watch` command-line tool in the `packages/runtime`
-  directory, which will watch for changes, then run `standard`, `jest`,
-  etc.
-
+On occaison, run `npm run ncu` and `tools/version-info.js` to keep an eye on
+dependencies.
 
 license
 ================================================================================

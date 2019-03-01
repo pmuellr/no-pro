@@ -6,10 +6,10 @@
   "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
   "homepage": "https://github.com/pmuellr/no-pro",
   "scripts": {
-    "ncu": "node tools/ncu-all.js",
+    "ncu": "node tools/run-all.js ncu -u --packageFile package.json",
     "standard": "standard --verbose && node tools/run-all npm run -s standard",
     "test-pkgs": "node tools/run-all.js npm run -s test",
-    "test": "standard --verbose && npm run -s test-pkgs",
+    "test": "npm run -s standard && npm run -s test-pkgs",
     "watch": "nodemon --exec 'npm run -s test'",
     "postinstall": "node tools/run-all npm install"
   },
