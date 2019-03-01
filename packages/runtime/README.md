@@ -3,6 +3,8 @@ no-pro runtime - core profiling library for node.js
 
 <img src="https://raw.githubusercontent.com/pmuellr/no-pro/master/docs/images/no-pro.png" width="64" align="right">
 
+[![NPM version](https://img.shields.io/npm/v/@no-pro/runtime.svg)](https://www.npmjs.com/package/@no-pro/runtime)
+
 Part of the [no-pro mono-repo](https://github.com/pmuellr/no-pro).
 
 
