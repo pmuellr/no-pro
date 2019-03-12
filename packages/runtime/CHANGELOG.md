@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 npm page: https://www.npmjs.com/package/@no-pro/runtime
 
 
+## [1.0.0] - 2019-03-11
+
+### Changed
+
+- `sources` option of `startProfiling()` renamed to `scripts`
+- `metaData` option of `startProfiling()` defaults to true
+- `metrics` option of `startProfiling()` defaults to true
+
+
 ## [0.1.0] - 2019-02-28
 
 ### Added

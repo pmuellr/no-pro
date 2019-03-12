@@ -1,6 +1,6 @@
 {
   "name": "@no-pro/runtime",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "node profiling tools - core runtime to generate profiles",
   "license": "MIT",
   "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
