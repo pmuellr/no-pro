@@ -18,10 +18,11 @@
     "lib/**/*"
   ],
   "scripts": {
+    "build": "npm run -s test",
     "deps-check": "node ../../tools/deps-check.js",
     "standard": "standard --verbose",
     "jest": "jest --colors",
-    "test": "npm -s run standard && npm run -s deps-check && npm run -s jest",
+    "test": "npm run -s standard && npm run -s deps-check && npm run -s jest",
     "watch": "nodemon --exec 'npm run -s test; date'"
   },
   "deps-check": {

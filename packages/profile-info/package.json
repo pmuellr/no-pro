@@ -1,0 +1,44 @@
+{
+  "name": "@no-pro/profile-info",
+  "private": true,
+  "version": "0.1.0",
+  "description": "node profiling tools - API providing info on profiles",
+  "license": "MIT",
+  "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
+  "homepage": "https://github.com/pmuellr/no-pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmuellr/no-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmuellr/no-pro/issues"
+  },
+  "main": "profile-info.js",
+  "files": [
+    "profile-info.js",
+    "lib/**/*"
+  ],
+  "scripts": {
+    "build": "npm run -s test",
+    "deps-check": "node ../../tools/deps-check.js",
+    "standard": "standard --verbose",
+    "jest": "jest --colors",
+    "test": "npm -s run standard && npm run -s jest",
+    "watch": "nodemon --exec 'FORCE_COLOR=1 npm run -s build; date'"
+  },
+  "standard": {
+    "ignore": [
+      "tmp/**/*"
+    ]
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "tmp/*"
+    ],
+    "delay": "1000"
+  },
+  "dependencies": {
+    "d3": "^5.9.0",
+    "debug": "^4.1.1"
+  }
+}

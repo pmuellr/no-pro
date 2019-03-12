@@ -3,8 +3,8 @@
 const debug = require('./debug')(__filename)
 
 // return array of {scriptId, source} for scriptId's found in a profile
-module.exports = async function getSources (session, profile) {
-  debug('getting sources')
+module.exports = async function getScripts (session, profile) {
+  debug('getting scripts')
 
   const { nodes } = profile
   if (!Array.isArray(nodes)) {

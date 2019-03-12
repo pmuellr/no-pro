@@ -18,6 +18,7 @@
     "lib/**/*"
   ],
   "scripts": {
+    "build": "npm run -s test",
     "deps-check": "node ../../tools/deps-check.js",
     "standard": "standard --verbose",
     "jest": "jest --colors",

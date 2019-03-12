@@ -4,5 +4,6 @@
 
 module.exports = [
   'runtime',
-  'express-middleware'
+  'express-middleware',
+  'profile-viewer'
 ]

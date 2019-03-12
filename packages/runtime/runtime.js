@@ -11,15 +11,15 @@ module.exports = {
 }
 
 const createSession = require('./lib/session')
-const getSources = require('./lib/sources')
-const getMetaData = require('./lib/meta-data')
+const getScripts = require('./lib/scripts')
+const getMeta = require('./lib/meta-data')
 const startMetrics = require('./lib/metrics')
 
 const debug = require('./lib/debug')(__filename)
 
 const DefaultOptions = {
   writeProfile: null,
-  sources: true,
+  scripts: false,
   metaData: true,
   metrics: true,
   samplingInterval: 10 // microseconds; 1000 milliseconds = 1 microsecond
@@ -69,11 +69,11 @@ async function startProfiling (options = {}) {
 
     debug('stopping profile')
 
-    let metaData, metrics, sources
+    let metaData, metrics, scripts
 
-    if (options.metaData) metaData = await getMetaData()
+    if (options.metaData) metaData = await getMeta()
     if (options.metrics) metrics = await stopMetrics()
-    if (options.sources) sources = await getSources(session, profile)
+    if (options.scripts) scripts = await getScripts(session, profile)
 
     await session.destroy()
 
@@ -83,7 +83,7 @@ async function startProfiling (options = {}) {
     if (metrics) result.metrics = metrics
 
     Object.assign(result, profile)
-    if (sources) result.sources = sources
+    if (scripts) result.scripts = scripts
 
     if (options.writeProfile) {
       await invokeFileWriter(options.writeProfile, result)

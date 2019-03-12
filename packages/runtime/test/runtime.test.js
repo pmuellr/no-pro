@@ -21,14 +21,13 @@ describe('runtime tests', () => {
 
   test('run a profile with no extras', async done => {
     const stopProfiling = await noProRuntime.startProfiling({
-      metaData: false,
       metrics: false,
-      sources: false
+      metaData: false
     })
     await someCodeToBeProfiled({ count: 3 })
     const profile = await stopProfiling()
 
-    validateProfileResult(profile, { metaData: false, metrics: false, sources: false })
+    validateProfileResult(profile, { metaData: false, metrics: false, scripts: false })
 
     writeProfile(profile, 'test-no-extras.cpuprofile')
 
@@ -42,6 +41,7 @@ describe('runtime tests', () => {
     shell.rm(profileFile)
 
     const stopProfiling = await noProRuntime.startProfiling({
+      scripts: true,
       writeProfile: path.join(tmpDir, 'test-extras.cpuprofile')
     })
 
@@ -52,14 +52,14 @@ describe('runtime tests', () => {
     const profileWritten = shell.cat(profileFile)
     expect(JSON.parse(profileWritten)).toEqual(profile)
 
-    validateProfileResult(profile, { metaData: true, metrics: true, sources: true })
+    validateProfileResult(profile, { metaData: true, metrics: true, scripts: true })
 
     done()
   }, 10 * 1000) // timeout
 })
 
 function validateProfileResult (profile, check) {
-  const { nodes, metaData, metrics, sources } = profile
+  const { nodes, metaData, metrics, scripts } = profile
 
   expect(Array.isArray(nodes)).toBeTruthy()
   expect(nodes[0]).toMatchObject({
@@ -106,11 +106,11 @@ function validateProfileResult (profile, check) {
     })
   }
 
-  if (!check.sources) {
-    expect(sources).toBeUndefined()
+  if (!check.scripts) {
+    expect(scripts).toBeUndefined()
   } else {
-    expect(Array.isArray(sources)).toBeTruthy()
-    expect(sources[0]).toMatchObject({
+    expect(Array.isArray(scripts)).toBeTruthy()
+    expect(scripts[0]).toMatchObject({
       scriptId: expect.any(String),
       url: expect.any(String),
       source: expect.any(String)

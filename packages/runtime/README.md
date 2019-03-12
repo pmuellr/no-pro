@@ -57,7 +57,7 @@ It stops the profile and returns the profile data as a JSON-able object.
 The optional `options` argument is an object which can contain the following
 properties:
 
-- `sources`
+- `scripts`
 
   If set to a truthy value, the source code of the modules that were profiled
   will be returned with the result.
@@ -67,13 +67,13 @@ properties:
 
   If set to a truthy value, some meta-data about the process
   will be returned with the result.
-  Default: `false`
+  Default: `true`
 
 - `metrics`
 
   If set to a truthy value, some metrics gathered during the profile
   will be returned with the result.
-  Default: `false`
+  Default: `true`
 
 - `samplingInterval`
 

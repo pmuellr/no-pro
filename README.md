@@ -17,6 +17,10 @@ This repository is a mono-repo, with the following embedded packages:
   This package provides express-compatible middleware to profile requests
   sent with a keyed header.
 
+- [profile-viewer](packages/profile-viewer/README.md)
+
+  This package provides a web app to view profiles.
+
 
 development
 ================================================================================

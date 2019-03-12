@@ -2,25 +2,40 @@
 
 // exposes an async function suitable for profiling
 
-module.exports = someCodeToBeProfiled
+module.exports = codeToProfile
 
 const createDeferred = require('../lib/deferred')
 
-async function someCodeToBeProfiled (options = {}) {
-  const { verbose = false, count = 5, delay = 10 } = options
-  const log = verbose ? consoleLog : () => {}
+const OptVerbose = !!process.env.NO_PRO_CTP_VERBOSE
+const OptCount = parseInt(process.env.NO_PRO_CTP_COUNT, 10) || 5
+const OptDelay = parseInt(process.env.NO_PRO_CTP_DELAY, 10) || 10
 
-  log('running with delaySync')
+async function main () {
+  await codeToProfile()
+}
+
+async function codeToProfile (options = {}) {
+  const {
+    verbose = OptVerbose,
+    count = OptCount,
+    delay = OptDelay
+  } = options
+
+  if (verbose) process.env.DEBUG = '*'
+
+  const debug = require('../lib/debug')(__filename)
+
+  debug('running with delaySync')
   for (let i = 0; i < count; i++) {
     const value = factorialSync(i, delay)
-    log(`${i}!: ${value}`)
+    debug(`${i}!: ${value}`)
   }
 
-  log('')
-  log('running with delayAsync')
+  debug('')
+  debug('running with delayAsync')
   for (let i = 0; i < count; i++) {
     const value = await factorialAsync(i, delay)
-    log(`${i}!: ${value}`)
+    debug(`${i}!: ${value}`)
   }
 }
 
@@ -50,14 +65,4 @@ async function delayAsync (ms) {
   return deferred.promise
 }
 
-function consoleLog (...args) {
-  console.log(...args)
-}
-
-if (require.main === module) {
-  someCodeToBeProfiled({
-    verbose: true,
-    count: 10,
-    delay: 100
-  })
-}
+if (require.main === module) main()

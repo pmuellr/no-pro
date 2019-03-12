@@ -1,0 +1,61 @@
+{
+  "name": "@no-pro/profile-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "description": "node profiling tools - profile viewer",
+  "license": "MIT",
+  "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
+  "homepage": "https://github.com/pmuellr/no-pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmuellr/no-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmuellr/no-pro/issues"
+  },
+  "scripts": {
+    "build": "npm run -s test && node tools/build.js",
+    "deps-check": "node ../../tools/deps-check.js",
+    "standard": "standard --verbose",
+    "jest": "jest --colors",
+    "test": "npm -s run standard && npm run -s jest",
+    "watch": "nodemon --exec 'FORCE_COLOR=1 npm run -s build; date;'"
+  },
+  "deps-check": {
+    "missing": {
+      "ignore": "inspector"
+    }
+  },
+  "standard": {
+    "ignore": [
+      "tmp/**/*"
+    ]
+  },
+  "nodemonConfig": {
+    "ext": "js,jsx,json,css,less,html",
+    "ignore": [
+      "tmp/*",
+      "docs/*",
+      "build-info.js"
+    ],
+    "delay": "1000"
+  },
+  "dependencies": {
+    "d3": "^5.9.0",
+    "debug": "^4.1.1",
+    "idb-keyval": "^3.1.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "styled-components": "^4.1.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-styled-components": "^1.10.0",
+    "less": "^3.9.0",
+    "uuid": "^3.3.2",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3"
+  }
+}
