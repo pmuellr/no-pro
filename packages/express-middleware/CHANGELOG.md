@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 npm page: https://www.npmjs.com/package/@no-pro/express-middleware
 
 
+## [1.0.0] - 2019-03-13
+
+### Changed
+
+- updated `@no-pro/runtime` dependency to `1.0.0`
+
+
 ## [0.1.0] - 2019-03-01
 
 ### Added

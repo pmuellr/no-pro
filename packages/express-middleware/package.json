@@ -1,6 +1,6 @@
 {
   "name": "@no-pro/express-middleware",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "node profiling tools - express middleware",
   "license": "MIT",
   "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
@@ -42,7 +42,7 @@
     "delay": "1000"
   },
   "dependencies": {
-    "@no-pro/runtime": "^0.1.0",
+    "@no-pro/runtime": "^1.0.0",
     "debug": "^4.1.1"
   }
 }
