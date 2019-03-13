@@ -6,10 +6,15 @@ no-pro profile-viewer - a web app to view profiles
 Part of the [no-pro mono-repo](https://github.com/pmuellr/no-pro).
 
 
-TODO
+about
 ================================================================================
 
-describe
+This package contains the source for a web page that can view V8 CPU profiles.
+
+The page is currently hosted at: https://pmuellr.github.io/no-pro/
+
+There's help available in the page, so ... no need to duplicate it here.
+
 
 
 changelog
