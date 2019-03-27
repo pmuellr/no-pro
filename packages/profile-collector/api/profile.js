@@ -1,58 +1,44 @@
 'use strict'
 
-module.exports = profile
+const express = require('express')
+const bodyParser = require('body-parser')
 
-const URL = require('url')
+const app = express()
+module.exports = app
 
-const createTx = require('../lib/tx')
+app.get('*', handleGet)
+app.put('*', bodyParser.json(), handlePutProfile)
+app.delete('*', handleDeleteProfile)
+app.all('*', handleUnknown)
 
-async function profile (req, res) {
-  console.log(`${__filename}: profile() ${req.method} ${req.url}`)
-  // console.log(`headers:`, req.headers)
-
-  const method = req.method.toUpperCase()
-  const url = URL.parse(req.url, true)
-  const path = url.pathname
-  const query = url.query
-  console.log(`path: ${path}`)
-  console.log(`query: ${JSON.stringify(query)}`)
-
-  const tx = createTx(req, res)
-
-  if (method === 'GET' && query.id == null) return doListProfiles(tx)
-  if (method === 'GET') return doGetProfile(tx, query.id)
-  if (method === 'PUT') return doPutProfile(tx, query.id)
-  if (method === 'DELETE') return doDeleteProfile(tx, query.id)
-
-  await tx.send(new Error('invalid operation'))
+async function handleGet (req, res) {
+  if (req.query.id == null) return handleListProfiles(req, res)
+  return handleGetProfile(req, res)
 }
 
-async function doListProfiles (tx) {
-  return tx.send({ status: 'doListProfiles() not yet implemented' })
+async function handleListProfiles (req, res) {
+  return res.send({ status: 'handleListProfiles() not yet implemented' })
 }
 
-async function doGetProfile (tx) {
-  return tx.send({ status: 'doGetProfile() not yet implemented' })
+async function handleGetProfile (req, res) {
+  return res.send({ status: 'handleGetProfile() not yet implemented' })
 }
 
-async function doPutProfile (tx) {
-  return tx.send({ status: 'doPutProfile() not yet implemented' })
+async function handlePutProfile (req, res) {
+  return res.send({ status: 'handlePutProfile() not yet implemented' })
 }
 
-async function doDeleteProfile (tx) {
-  return tx.send({ status: 'doDeleteProfile() not yet implemented' })
+async function handleDeleteProfile (req, res) {
+  return res.send({ status: 'handleDeleteProfile() not yet implemented' })
+}
+
+async function handleUnknown (req, res) {
+  return res.send({ error: `unknown request: ${req.method} ${req.originalUrl}` })
 }
 
 if (require.main === module) {
-  const req = {
-    method: 'GET',
-    url: '/api/profile.js?id=foo',
-    headers: {}
-  }
-
-  const res = {
-    end (content, cb) { setImmediate(cb) }
-  }
-
-  profile(req, res)
+  const port = process.env.PORT || '3000'
+  app.listen(port, 'localhost', () => {
+    console.log(`server started on http://localhost:${port}`)
+  })
 }
