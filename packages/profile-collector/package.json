@@ -1,0 +1,44 @@
+{
+  "name": "@no-pro/profile-collector",
+  "version": "1.0.0",
+  "description": "node profiling tools - provides a collection of profiles",
+  "license": "MIT",
+  "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
+  "homepage": "https://github.com/pmuellr/no-pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmuellr/no-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmuellr/no-pro/issues"
+  },
+  "main": "profile-collector.js",
+  "files": [
+    "profile-collector.js",
+    "lib/**/*"
+  ],
+  "scripts": {
+    "build": "npm run -s test",
+    "deps-check": "node ../../tools/deps-check.js",
+    "standard": "standard --verbose",
+    "jest": "jest --colors",
+    "test": "npm -s run standard && npm run -s deps-check && npm run -s jest",
+    "watch": "nodemon --exec 'npm run -s test; date'"
+  },
+  "standard": {
+    "ignore": [
+      "tmp/**"
+    ]
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "tmp/*"
+    ],
+    "delay": "1000"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.423.0",
+    "debug": "^4.1.1",
+    "express": "^4.16.4"
+  }
+}

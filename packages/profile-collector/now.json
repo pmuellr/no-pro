@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/api/profile(/?)",
+      "dest": "/api/profile.js"
+    },
+    {
+      "src": "/api/profile/(?<id>[^/]+)",
+      "dest": "/api/profile.js?id=$id"
+    }
+  ],
+  "builds": [
+    { "src": "api/*.js", "use": "@now/node" }
+  ]
+}
