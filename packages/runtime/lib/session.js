@@ -14,6 +14,9 @@ try {
 
 const createDeferred = require('./deferred')
 
+/**
+ * @returns Promise<Session>
+ */
 async function create () {
   debug('creating session')
 
@@ -50,6 +53,12 @@ class Session {
     this._session = null
   }
 
+  /**
+   * @param {string} method
+   * @param {*}      [args]
+   *
+   * @returns {Promise<*>}
+   */
   async post (method, args) {
     debug(`posting method ${method} ${JSON.stringify(args)}`)
     if (this._session == null) {

@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "npm run -s test && node tools/build.js",
+    "ts-check": "tsc --allowJs --checkJs --noEmit --target ES5 *.js",
     "deps-check": "node ../../tools/deps-check.js",
     "standard": "standard --verbose",
     "jest": "jest --colors",
