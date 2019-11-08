@@ -96,5 +96,22 @@ export default function HelpPage (props) {
       display some information about this application
     </p>
 
+    <p>
+      If you're working in a large project with many directories and files,
+      you can arrange to treat some directories as directories of packages.
+      You should set the localStorage entry <code>fake-packages-dirs</code> to a
+      comma-separated list of those directory names.  "Packages" found in
+      those directories will then be used as packages, and displayed with
+      a <code>^</code> prefix.
+    </p>
+
+    <p>
+      For instance, I work on Kibana, and use the following value for that
+      localStorage value:
+    </p>
+
+    <pre>
+      x-pack/legacy/plugins,src/core/server,x-pack/plugins,packages,src/core/server
+    </pre>
   </div>
 }

@@ -243,6 +243,9 @@ function splitUrl (url) {
 
   let match = url.match(patternNM)
   if (match == null) {
+    const fakePkgInfo = splitByFakePackageDir(url)
+    if (fakePkgInfo != null) return fakePkgInfo
+
     const pkgName = '<app>'
     return Object.assign({}, result, { pkgName })
   }
@@ -296,4 +299,35 @@ function microsPerSample (timeMicros, nodes) {
   }
 
   return timeMicros / samples
+}
+
+// get fake-package-dirs from localhost, split on ',' and ws
+function getFakePackageDirs () {
+  if (typeof window === 'undefined') return []
+  if (typeof window.localStorage === 'undefined') return []
+
+  let fakePackageDirs = window.localStorage['fake-packages-dirs']
+  if (fakePackageDirs == null) return []
+
+  return fakePackageDirs.replace(/,/g, ' ').trim().split(/\s+/g)
+}
+
+const FakePackageDirs = getFakePackageDirs()
+
+function splitByFakePackageDir (url) {
+  url = removeFileProtocol(url)
+  for (let pkgName of FakePackageDirs) {
+    const index = url.indexOf(`/${pkgName}/`)
+    if (index === -1) continue
+
+    const pkgPath = url.substr(0, index)
+    const module = url.substr(index + pkgName.length + 2)
+    const match = module.match(/^(.*?)\/(.*)$/)
+
+    pkgName = `^${pkgName}/${match[1]}`
+    const modPath = match[2]
+    return { pkgName, pkgPath, modPath }
+  }
+
+  return null
 }

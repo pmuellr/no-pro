@@ -11,7 +11,7 @@ module.exports = longestCommonPath
  * @param {string} sep
  * @returns {!Array<!Array<string>>}
  */
-const splitStrings = (a, sep = '/') => a.map(i => i.split(sep));
+const splitStrings = (a, sep = '/') => a.map(i => i.split(sep))
 
 /**
  * Given an index number, return a function that takes an array and returns the
@@ -19,7 +19,7 @@ const splitStrings = (a, sep = '/') => a.map(i => i.split(sep));
  * @param {number} i
  * @return {function(!Array<*>): *}
  */
-const elAt = i => a => a[i];
+const elAt = i => a => a[i]
 
 /**
  * Transpose an array of arrays:
@@ -29,14 +29,14 @@ const elAt = i => a => a[i];
  * @param {!Array<!Array<*>>} a
  * @return {!Array<!Array<*>>}
  */
-const rotate = a => a[0].map((e, i) => a.map(elAt(i)));
+const rotate = a => a[0].map((e, i) => a.map(elAt(i)))
 
 /**
  * Checks of all the elements in the array are the same.
  * @param {!Array<*>} arr
  * @return {boolean}
  */
-const allElementsEqual = arr => arr.every(e => e === arr[0]);
+const allElementsEqual = arr => arr.every(e => e === arr[0])
 
 function longestCommonPath (fileNames, sep = '/') {
   return rotate(splitStrings(fileNames, sep))
